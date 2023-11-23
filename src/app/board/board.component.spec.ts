@@ -135,45 +135,39 @@ describe('BoardComponent', () => {
       expect(component.squares.length).toBe(9);
     });
 
-    it('should put marks on random squares in the canvas', () => {
-      component.makeMove(0);
-      component.makeMove(8);
+    ([
+      [0, 8, 1, 7, 2],
+      [3, 8, 4, 7, 5],
+      [6, 2, 7, 1, 8],
+      [0, 2, 3, 1, 6],
+      [1, 6, 4, 5, 7],
+      [2, 6, 5, 3, 8],
+      [0, 6, 4, 3, 8],
+      [2, 1, 4, 3, 6],
+    ]).forEach((m, idx) =>
+      it(`should accept these 3-square lines (testcase ${idx+1})`, () => {
+        m.forEach(i => component.makeMove(i));
 
-      fixture.detectChanges();
-
-      const squareElements = boardDe.nativeElement.querySelectorAll('app-square');
-      expect(squareElements[0].querySelector('button').textContent).toBe('X');
-      expect(squareElements[8].querySelector('button').textContent).toBe('O');
-    });
-
-    it('should declare X as round winner after completing a line', () => {
-      component.makeMove(0);
-      component.makeMove(8);
-      component.makeMove(1);
-      component.makeMove(7);
-      component.makeMove(2);
-
-      fixture.detectChanges();
-
-      const winSquareElements = boardDe.queryAll(By.css('.win-cell'));
-      expect(winSquareElements.length).toBe(3);
-      expect(winSquareElements[0].nativeElement.textContent).toBe('X');
-    });
-
-    it('should declare O as round winner after completing a line', () => {
-      component.makeMove(0);
-      component.makeMove(8);
-      component.makeMove(1);
-      component.makeMove(7);
-      component.makeMove(4);
-      component.makeMove(6);
-
-      fixture.detectChanges();
-
-      const winSquareElements = boardDe.queryAll(By.css('.win-cell'));
-      expect(winSquareElements.length).toBe(3);
-      expect(winSquareElements[0].nativeElement.textContent).toBe('O');
-    });
+        fixture.detectChanges();
+  
+        const winSquareElements = boardDe.queryAll(By.css('.win-cell'));
+        expect(winSquareElements.length).toBe(3);
+        expect(winSquareElements[0].nativeElement.textContent).toBe('X');
+      }));
+    
+    ([
+      [0, 8, 1, 7, 4, 6],
+    ]).forEach((m, idx) =>
+      it(`should accept these 3-square lines (testcase ${idx+10})`, () => {
+        m.forEach(i => component.makeMove(i));
+          
+        fixture.detectChanges();
+  
+        const winSquareElements = boardDe.queryAll(By.css('.win-cell'));
+        expect(winSquareElements.length).toBe(3);
+        expect(winSquareElements[0].nativeElement.textContent).toBe('O');
+      }));
+    
   });
 
   describe('Pro', () => {
@@ -199,7 +193,7 @@ describe('BoardComponent', () => {
       [3, 2, 7, 1, 11, 12, 15],
       [0, 2, 5, 1, 10, 12, 15],
       [3, 2, 6, 1, 9, 15, 12],
-    ]).forEach((m, idx) => {
+    ]).forEach((m, idx) =>
       it(`should accept these 4-square lines (testcase ${idx+1})`, () => {
         m.forEach(i => component.makeMove(i));
   
@@ -208,15 +202,14 @@ describe('BoardComponent', () => {
         const winSquareElements = boardDe.queryAll(By.css('.win-cell'));
         expect(winSquareElements.length).toBe(4);
         expect(winSquareElements[0].nativeElement.textContent).toBe('X');
-      });
-    });
+      }));
 
     ([
       [2, 3, 5, 7, 8],
       [1, 3, 6, 7, 11],
       [4, 3, 9, 7, 14],
       [7, 3, 10, 8, 13]
-    ]).forEach((m, idx) => {
+    ]).forEach((m, idx) =>
       it(`should ignore these kind of lines (testcase ${idx+1})`, () => {
         m.forEach(i => component.makeMove(i));
   
@@ -224,8 +217,7 @@ describe('BoardComponent', () => {
   
         const winSquareElements = boardDe.queryAll(By.css('.win-cell'));
         expect(winSquareElements.length).toBe(0);
-      });
-    });
+      }));
   });
  
   describe('Hybrid', () => {
@@ -253,7 +245,7 @@ describe('BoardComponent', () => {
       [9, 2, 10, 4, 11],
       [12, 2, 13, 4, 14],
       [13, 2, 14, 4, 15],
-    ]).forEach((m, idx) => {
+    ]).forEach((m, idx) =>
       it(`should ignore these 3-square lines (testcase ${idx+1})`, () => {
         m.forEach(i => component.makeMove(i));
      
@@ -261,15 +253,14 @@ describe('BoardComponent', () => {
   
         const winSquareElements = boardDe.queryAll(By.css('.win-cell'));
         expect(winSquareElements.length).toBe(0);
-      });
-    });
+      }));
 
     ([
       [2, 3, 5, 7, 8],
       [1, 3, 6, 7, 11],
       [4, 3, 9, 7, 14],
       [7, 3, 10, 8, 13]
-    ]).forEach((m, idx) => {
+    ]).forEach((m, idx) =>
       it(`should accept these 3-square lines (testcase ${idx+1})`, () => {
         m.forEach(i => component.makeMove(i));
   
@@ -278,8 +269,7 @@ describe('BoardComponent', () => {
         const winSquareElements = boardDe.queryAll(By.css('.win-cell'));
         expect(winSquareElements.length).toBe(3);
         expect(winSquareElements[0].nativeElement.textContent).toBe('X');
-      });
-    });
+      }));
 
     ([
       [0, 15, 1, 14, 2, 13, 4, 12],
@@ -292,17 +282,16 @@ describe('BoardComponent', () => {
       [5, 0, 6, 4, 7, 8, 3, 12],
       [4, 0, 8, 5, 12, 10, 3, 15],
       [5, 3, 4, 6, 1, 9, 2, 12],
-    ]).forEach((m, idx) => {
+    ]).forEach((m, idx) =>
       it(`should accept these 4-square lines (testcase ${idx+1})`, () => {
-      m.forEach(i => component.makeMove(i));
-    
-      fixture.detectChanges();
-    
-      const winSquareElements = boardDe.queryAll(By.css('.win-cell'));
-      expect(winSquareElements.length).toBe(4);
-      expect(winSquareElements[0].nativeElement.textContent).toBe('O');
-      });
-    });
+        m.forEach(i => component.makeMove(i));
+      
+        fixture.detectChanges();
+      
+        const winSquareElements = boardDe.queryAll(By.css('.win-cell'));
+        expect(winSquareElements.length).toBe(4);
+        expect(winSquareElements[0].nativeElement.textContent).toBe('O');
+      }));
   });
 
 });
