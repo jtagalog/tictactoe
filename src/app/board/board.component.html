@@ -1,0 +1,10 @@
+<app-score (matchEnded)="declareWinner($event)"></app-score>
+<main [ngClass]="gameType === 'pro' ? 'board-pro' : 'board-beginner'">
+    <app-square
+        *ngFor="let val of squares; let i = index"
+        [value]="val"
+        [index]="i"
+        (click)="makeMove(i)">
+    </app-square>
+</main>
+<button class="btn-centered" [disabled]="disabled" (click)="newRound()">Next Round</button>

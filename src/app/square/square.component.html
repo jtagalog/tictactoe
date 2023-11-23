@@ -1,0 +1,6 @@
+<button 
+    type="button"
+    [ngClass]="winLine && winLine.indexOf(index) > -1 ? 'win-cell': ''" 
+    [disabled]="winLine != null">{{value}}</button>
+
+

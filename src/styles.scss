@@ -1,0 +1,23 @@
+/* You can add global styles to this file, and also import other style files */
+@font-face {
+	font-family: 'Light';
+	src: url('./assets/Poppins-Light.ttf');
+}
+
+* {
+	font-family: 'Light';
+}
+
+:root {
+	--color-text-primary: #1c2a38;
+	--color-text-secondary: #8A8F98;
+	--color-text-alert: #d72641;
+	--color-text-icon: #dbdade;
+	--color-text-green: #60c050;
+	--color-bg-primary: #fff;
+	--color-bg-secondary: #f3f5f9;
+	--color-bg-alert: #fdeaec;
+	--color-bg-green: #60c050;
+	--color-theme-primary: #623ce6;
+
+}

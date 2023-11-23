@@ -1,0 +1,30 @@
+$cell-dimension-beginner: calc(100%/3);
+$cell-dimension-pro: calc(100%/4);
+
+main {
+    max-width: 350px;
+    max-height: 350px;
+    width: 85vw;  
+    height: 85vw;
+    display:grid;
+    grid-gap: 3px;
+    margin: 12px auto;
+}
+
+.board-beginner {
+  grid-template-columns: calc(100%/3) calc(100%/3) calc(100%/3);
+  grid-template-rows: calc(100%/3) calc(100%/3) calc(100%/3);
+}
+
+.board-pro {
+  grid-template-columns: calc(100%/4) calc(100%/4) calc(100%/4) calc(100%/4);
+  grid-template-rows: calc(100%/4) calc(100%/4) calc(100%/4) calc(100%/4);
+}
+
+.btn-centered {
+  font-size: 1.2em;
+  padding: 5px 10px;
+  /* Center horizontally */
+  margin: 20px auto;
+  display: block;
+}
