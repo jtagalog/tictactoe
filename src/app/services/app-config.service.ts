@@ -16,7 +16,7 @@ export class AppConfigService implements IConfigService {
     getVisitorTeam(): string {
         return this.config.awayTeam;
     }
-    getGameType(): 'beginner' | 'pro' {
+    getGameType(): 'beginner' | 'pro' | 'hybrid' {
         return this.config.gameType;
     }
 }

@@ -14,12 +14,13 @@ export class BoardComponent implements OnInit, OnDestroy {
     private config: IConfigService,
     private match: MatchService) {}
   
-  gameType: 'beginner' | 'pro' = 'beginner';
+  gameType: 'beginner' | 'pro' | 'hybrid' = 'beginner';
   squares: any[] = Array(0).fill(null);
   disabled: boolean = false;
 
   private firstMove: 'home' | 'visitor' = 'home';
   private move: number = 0;
+  private roundStarted: boolean = false;
 
   private get value(): 'X' | 'O' {
     return (this.move % 2 === 0) ? 'X': 'O';
@@ -49,13 +50,19 @@ export class BoardComponent implements OnInit, OnDestroy {
 
     this.squares = Array(size).fill(null);
     this.move = 0;
+    this.roundStarted = true;
 
     this.match.firstMove$.next(Math.random());
     this.match.teamTurn$.next(this.getPlayer('X'));
+    // resets the squares' win-cell style
     this.match.roundWinner$.next({roundWinner: ''})
   }
 
   makeMove(idx: number): void {
+    if(!this.roundStarted) {
+      return;
+    }
+
     if(!this.squares[idx]) {
       this.squares.splice(idx, 1, this.value);
       this.move++;
@@ -67,6 +74,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     const winLine = this.calculateWinner();
 
     if (winLine !== null) {
+      this.roundStarted = false;
       this.match.teamTurn$.next('');
       this.match.roundWinner$.next({
         roundWinner: this.getPlayer(this.squares[winLine[0]]),
@@ -80,7 +88,52 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   private calculateWinner(): any {
-    return this.gameType === 'beginner' ? this.calculateInBeginnerLevel() : this.calculateInProLevel();
+    switch(this.gameType) {
+      case 'beginner': {
+        return this.calculateInBeginnerLevel([
+          [0, 1, 2],
+          [3, 4, 5],
+          [6, 7, 8],
+          [0, 3, 6],
+          [1, 4, 7],
+          [2, 5, 8],
+          [0, 4, 8],
+          [2, 4, 6]
+        ]);
+      } case 'pro': {
+        return this.calculateInProLevel([
+          [0, 1, 2, 3],
+          [4, 5, 6, 7],
+          [8, 9, 10, 11],
+          [12, 13, 14, 15],
+          [0, 4, 8, 12],
+          [1, 5, 9, 13],
+          [2, 6, 10, 14],
+          [3, 7, 11, 15],
+          [0, 5, 10, 15],
+          [3, 6, 9, 12],
+        ]);
+      } case 'hybrid': {
+        return this.calculateInHybrid([
+          [0, 1, 2, 3],
+          [4, 5, 6, 7],
+          [8, 9, 10, 11],
+          [12, 13, 14, 15],
+          [0, 4, 8, 12],
+          [1, 5, 9, 13],
+          [2, 6, 10, 14],
+          [3, 7, 11, 15],
+          [0, 5, 10, 15],
+          [3, 6, 9, 12],
+        ], 
+        [
+          [2, 5, 8],
+          [1, 6, 11],
+          [7, 10, 13],
+          [4, 9, 14]
+        ]);
+      }
+    }
   }
 
   private getPlayer(value: 'X' | 'O'): 'home' | 'visitor' {
@@ -91,18 +144,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     return this.firstMove === 'home' ? 'visitor' : 'home';
   }
 
-  private calculateInBeginnerLevel(): any {
-    const lines = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6]
-    ];
-
+  private calculateInBeginnerLevel(lines: number[][]): any {
     for (let i = 0; i < lines.length; i++) {
       const [a, b, c] = lines[i];
       if (
@@ -117,20 +159,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     return null;
   }
 
-  private calculateInProLevel(): any {
-    const lines = [
-      [0, 1, 2, 3],
-      [4, 5, 6, 7],
-      [8, 9, 10, 11],
-      [12, 13, 14, 15],
-      [0, 4, 8, 12],
-      [1, 5, 9, 13],
-      [2, 6, 10, 14],
-      [3, 7, 11, 15],
-      [0, 5, 10, 15],
-      [3, 6, 9, 12],
-    ];
-
+  private calculateInProLevel(lines: number[][]): any {
     for (let i = 0; i < lines.length; i++) {
       const [a, b, c, d] = lines[i];
       if (
@@ -144,5 +173,15 @@ export class BoardComponent implements OnInit, OnDestroy {
     }
 
     return null;
+  }
+
+  private calculateInHybrid(proLines: number[][], additionalLines: number[][]): any {
+    let wLine = this.calculateInBeginnerLevel(additionalLines);
+
+    if (wLine === null) {
+      wLine = this.calculateInProLevel(proLines);
+    }
+
+    return wLine;
   }
 }

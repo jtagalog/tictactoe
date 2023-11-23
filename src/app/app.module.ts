@@ -29,8 +29,8 @@ import { IConfigService } from './interfaces/config.service';
       useValue: { 
         matchFormat: 'bo3', 
         homeTeam: 'Anthony', 
-        awayTeam: 'Ivy', 
-        gameType: 'beginner' 
+        awayTeam: 'Ivyrez', 
+        gameType: 'hybrid' 
       }
     },
     MatchService,

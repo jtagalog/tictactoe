@@ -1,5 +1,5 @@
 <app-score (matchEnded)="declareWinner($event)"></app-score>
-<main [ngClass]="gameType === 'pro' ? 'board-pro' : 'board-beginner'">
+<main [ngClass]="gameType === 'pro' || gameType === 'hybrid' ? 'board-pro' : 'board-beginner'">
     <app-square
         *ngFor="let val of squares; let i = index"
         [value]="val"

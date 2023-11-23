@@ -23,6 +23,7 @@ export class ScoreComponent implements OnInit {
 
   matchFormat: string = '';
   matchFormatStr: string = '';
+  gameType: string = '';
   homeTeam: string = '';
   visitorTeam: string = '';
   teamTurn: string | null = null;
@@ -42,6 +43,7 @@ export class ScoreComponent implements OnInit {
   ngOnInit(): void {
     this.matchFormat = this.config.getMatchFormat();
     this.matchFormatStr = this.getMatchFormatStr(this.matchFormat);
+    this.gameType = this.config.getGameType().toUpperCase();
     this.homeTeam = this.config.getHomeTeam();
     this.visitorTeam = this.config.getVisitorTeam();
 

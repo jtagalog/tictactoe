@@ -8,9 +8,24 @@
     height: 100%;
 }
 
+.match-header {
+	display: flex;
+	padding: 16px;
+	border-bottom: 2px solid rgba(#303030, 0.1);
+}
+
+.match-gametype {
+	display: flex;
+	align-items: center;
+	font-weight: 600;
+	height: 0;
+	margin: 0 auto;
+}
+
 .match-content {
 	display: grid;
-    grid-template-columns: calc(100%/3) calc(100%/3) calc(100%/3)
+    grid-template-columns: calc(100%/3) calc(100%/3) calc(100%/3);
+	height: 100%;
 }
 
 .column {
@@ -40,13 +55,13 @@
 }
 
 .match-score {
-	margin-top: 12px;
+	margin: 5px 0;
 	display: flex;
 	align-items: center;
 }
 
 .match-score-number {
-	font-size: 48px;
+	font-size: 34px;
 	font-weight: 600;
 	line-height: 1;
 	&--winner {
@@ -55,7 +70,7 @@
 }
 
 .match-score-divider {
-	font-size: 28px;
+	font-size: 21px;
 	font-weight: 700;
 	line-height: 1;
 	color: var (--color-text-icon);
@@ -64,12 +79,12 @@
 }
 
 .match-format {
-	margin-top: 12px;
+	font-size: 13px;
 }
 
 .container {
     max-width: 360px;
-    max-height: 106px;
+    max-height: 116px;
     width: 85vw;  
     height: 55vw;
 	display: flex;
@@ -86,9 +101,9 @@
 
 @keyframes MoveUpDown {
 	0%, 100% {
-		top: 6px;
+		top: 38px;
 	}
 	50% {
-		top: 17px;
+		top: 45px;
 	}
 }
