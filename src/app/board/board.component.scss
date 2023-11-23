@@ -1,6 +1,3 @@
-$cell-dimension-beginner: calc(100%/3);
-$cell-dimension-pro: calc(100%/4);
-
 main {
     max-width: 350px;
     max-height: 350px;
@@ -23,8 +20,22 @@ main {
 
 .btn-centered {
   font-size: 1.2em;
-  padding: 5px 10px;
-  /* Center horizontally */
   margin: 20px auto;
   display: block;
+}
+
+.btn-next-round {
+	border: none;
+	background-color: var(--color-theme-primary);
+	border-radius: 6px;
+	padding: 10px 48px;
+	color: rgba(#fff, 0.9);
+	font-size: 14px;
+	box-shadow: 0 4px 8px 0 rgba(#303030, 0.25);
+  &:hover {
+    cursor: pointer;
+  }
+  &:active {
+    transform: translateY(2px);
+  }
 }

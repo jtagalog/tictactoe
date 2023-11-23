@@ -87,10 +87,18 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.disabled = true;
   }
 
+  private getPlayer(value: 'X' | 'O'): 'home' | 'visitor' {
+    if (value === 'X') {
+      return this.firstMove;
+    }
+
+    return this.firstMove === 'home' ? 'visitor' : 'home';
+  }
+
   private calculateWinner(): any {
     switch(this.gameType) {
       case 'beginner': {
-        return this.calculateInBeginnerLevel([
+        return this.calculateInBeginner([
           [0, 1, 2],
           [3, 4, 5],
           [6, 7, 8],
@@ -101,7 +109,7 @@ export class BoardComponent implements OnInit, OnDestroy {
           [2, 4, 6]
         ]);
       } case 'pro': {
-        return this.calculateInProLevel([
+        return this.calculateInPro([
           [0, 1, 2, 3],
           [4, 5, 6, 7],
           [8, 9, 10, 11],
@@ -136,15 +144,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     }
   }
 
-  private getPlayer(value: 'X' | 'O'): 'home' | 'visitor' {
-    if (value === 'X') {
-      return this.firstMove;
-    }
-
-    return this.firstMove === 'home' ? 'visitor' : 'home';
-  }
-
-  private calculateInBeginnerLevel(lines: number[][]): any {
+  private calculateInBeginner(lines: number[][]): any {
     for (let i = 0; i < lines.length; i++) {
       const [a, b, c] = lines[i];
       if (
@@ -159,7 +159,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     return null;
   }
 
-  private calculateInProLevel(lines: number[][]): any {
+  private calculateInPro(lines: number[][]): any {
     for (let i = 0; i < lines.length; i++) {
       const [a, b, c, d] = lines[i];
       if (
@@ -176,10 +176,10 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   private calculateInHybrid(proLines: number[][], additionalLines: number[][]): any {
-    let wLine = this.calculateInBeginnerLevel(additionalLines);
+    let wLine = this.calculateInBeginner(additionalLines);
 
     if (wLine === null) {
-      wLine = this.calculateInProLevel(proLines);
+      wLine = this.calculateInPro(proLines);
     }
 
     return wLine;

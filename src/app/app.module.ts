@@ -28,8 +28,8 @@ import { IConfigService } from './interfaces/config.service';
       provide: APP_CONFIG, 
       useValue: { 
         matchFormat: 'bo3', 
-        homeTeam: 'Anthony', 
-        awayTeam: 'Ivyrez', 
+        homeTeam: 'Player 1', 
+        awayTeam: 'Player 2', 
         gameType: 'hybrid' 
       }
     },
